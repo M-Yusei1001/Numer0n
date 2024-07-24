@@ -69,12 +69,29 @@ class Numeron_game:
         return bites
 
     def is_user_won(self, eats:int) -> bool:
-        if eats == 3:
+        if eats == self.digits:
             return True
         else:
             return False        
 
 class Numeron_io:
+
+    def set_difficulty(self) -> int:
+        print("難易度を選択してください：")
+        print("Easy：1, Normal：2, Hard：3, 終了：0")
+        difficulty = input(">")
+
+        if difficulty.isdigit():
+            while int(difficulty) < 0 or 3 < int(difficulty):
+                print("正しい数を入力してください")
+                difficulty = input(">")
+
+        elif not difficulty.isdigit():
+            while not difficulty.isdigit():
+                print("数を入力してください")
+                difficulty = input(">")
+
+        return int(difficulty)
 
     def is_duplicated(num_list:list) -> bool:
         for i in range(len(num_list)):
@@ -88,35 +105,32 @@ class Numeron_io:
 
     def num_input(self, digits:int) -> list:
 
-            print(f"{digits}ケタの数を入力してください。")
-            print(f"<ルール>：重複なし")
+        print(f"{digits}ケタの数を入力してください。")
+        print(pycolor.CYAN + "<ルール>：重複なし" + pycolor.END)
 
-            NOT_DIGIT = True
-            input_line = input(">")
+        input_line = input(">")
 
-            #入力が数字のみか、重複判定
-            if input_line.isdigit():
-                NOT_DIGIT = False
-                IS_DUPLICATED = Numeron_io.is_duplicated(input_line)
+        #必要なこと
+        #1.入力が数字のみか判定
+        #2.入力のケタ数が合っているか判定
+        #3.入力に重複がないか判定
 
-            #Trueの間繰り返す
-            while (len(input_line) != digits 
-                    or NOT_DIGIT 
-                    or IS_DUPLICATED ):
-        
-                print("正しく入力してください")
-                NOT_DIGIT = True
-                input_line = input(">")
+        if input_line.isdigit():
+            while (len(input_line) != digits
+                    or Numeron_io.is_duplicated(input_line)):
+                    print(pycolor.YELLOW + "正しく入力してください" + pycolor.END)
+                    input_line = input(">")
 
-                if input_line.isdigit():
-                    NOT_DIGIT = False
-                    IS_DUPLICATED = Numeron_io.is_duplicated(input_line)
+        elif not input_line.isdigit():
+            while not input_line.isdigit():
+                print(pycolor.YELLOW + "数を入力してください" + pycolor.END)
+                input_line = input(">")            
 
-            num_list=[]
-            for num in input_line:
-                num_list.append(int(num))
+        num_list=[]
+        for num in input_line:
+            num_list.append(int(num))
 
-            return num_list    
+        return num_list    
                 
                 
 
@@ -124,5 +138,10 @@ if __name__ == "__main__":
     game = Numeron_game(2)
     game_io = Numeron_io
 
-    print(game_io.num_input(game_io, 3))
+    numlist = game_io.num_input(game_io, 3)
+
+    print(numlist)
+
+    for num in numlist:
+        print(type(num))
 
