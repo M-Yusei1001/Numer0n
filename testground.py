@@ -1,10 +1,9 @@
-def kakeru(num):
-    return num * 2
+def main() -> list:
+    input_line = input(">")
 
-def main():
-    number = [1, 5, 5]
-    num_mult = map(kakeru, number)
-    return num_mult
+    print(type(input_line))
 
+    print(type(len(input_line)))
+    
 if __name__ == "__main__":
-    print(list(main()))
+    main()

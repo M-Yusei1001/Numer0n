@@ -18,7 +18,7 @@ class pycolor:
     INVISIBLE = '\033[08m'
     REVERCE = '\033[07m'
 
-class Numeron:
+class Numeron_game:
     def __init__(self, mode:int) -> None:
         #Easy:1, Normal:2, Hard:3
         self.mode = mode
@@ -66,10 +66,63 @@ class Numeron:
 
                     bites += 1
 
-        return bites        
+        return bites
 
+    def is_user_won(self, eats:int) -> bool:
+        if eats == 3:
+            return True
+        else:
+            return False        
 
+class Numeron_io:
+
+    def is_duplicated(num_list:list) -> bool:
+        for i in range(len(num_list)):
+            for j in range(len(num_list)):
+                
+                #重複があればTrueを返す
+                if num_list[i] == num_list[j] and i != j:
+                    return True
+                
+        return False        
+
+    def num_input(self, digits:int) -> list:
+
+            print(f"{digits}ケタの数を入力してください。")
+            print(f"<ルール>：重複なし")
+
+            NOT_DIGIT = True
+            input_line = input(">")
+
+            #入力が数字のみか、重複判定
+            if input_line.isdigit():
+                NOT_DIGIT = False
+                IS_DUPLICATED = Numeron_io.is_duplicated(input_line)
+
+            #Trueの間繰り返す
+            while (len(input_line) != digits 
+                    or NOT_DIGIT 
+                    or IS_DUPLICATED ):
+        
+                print("正しく入力してください")
+                NOT_DIGIT = True
+                input_line = input(">")
+
+                if input_line.isdigit():
+                    NOT_DIGIT = False
+                    IS_DUPLICATED = Numeron_io.is_duplicated(input_line)
+
+            num_list=[]
+            for num in input_line:
+                num_list.append(int(num))
+
+            return num_list    
+                
+                
 
 if __name__ == "__main__":
-    game = Numeron(2)
+    game = Numeron_game(2)
+    game_io = Numeron_io
+
+    print(game_io.num_input(game_io, 3))
 
