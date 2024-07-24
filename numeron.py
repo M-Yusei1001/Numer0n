@@ -33,17 +33,20 @@ class Numeron_game:
         elif self.mode == 3: #Hard
             self.digits = 4
 
+    #回答リスト生成
     def generate_ans(self) -> list:
         
         ans_list = random.sample(range(0,10), self.digits)               
 
         return ans_list           
 
+    #回答リスト結合
     def jointed_ans(self, ans_list:list) -> int:
         ans = "".join(map(str, ans_list))
 
         return int(ans)
 
+    #Eatsカウント
     def count_eats(self, num_list:list, ans_list:list) -> int:
         eats = 0
 
@@ -53,6 +56,7 @@ class Numeron_game:
 
         return eats
 
+    #Bitesカウント
     def count_bites(self, num_list:list, ans_list:list) -> int:
         bites = 0
 
@@ -68,6 +72,7 @@ class Numeron_game:
 
         return bites
 
+    #終了判定
     def is_user_won(self, eats:int) -> bool:
         if eats == self.digits:
             return True
@@ -76,6 +81,7 @@ class Numeron_game:
 
 class Numeron_io:
 
+    #難易度選択io部
     def set_difficulty(self) -> int:
         print("難易度を選択してください：")
         print("Easy：1, Normal：2, Hard：3, 終了：0")
@@ -93,6 +99,7 @@ class Numeron_io:
 
         return int(difficulty)
 
+    #重複判定（クラス内のみで使用）
     def is_duplicated(num_list:list) -> bool:
         for i in range(len(num_list)):
             for j in range(len(num_list)):
@@ -103,6 +110,7 @@ class Numeron_io:
                 
         return False        
 
+    #io部
     def num_input(self, digits:int) -> list:
 
         print(f"{digits}ケタの数を入力してください。")
@@ -110,38 +118,26 @@ class Numeron_io:
 
         input_line = input(">")
 
-        #必要なこと
-        #1.入力が数字のみか判定
-        #2.入力のケタ数が合っているか判定
-        #3.入力に重複がないか判定
-
+        #入力判定（数値のみ）
         if input_line.isdigit():
+            #入力判定（桁数、重複）
             while (len(input_line) != digits
                     or Numeron_io.is_duplicated(input_line)):
                     print(pycolor.YELLOW + "正しく入力してください" + pycolor.END)
                     input_line = input(">")
 
+        #入力判定（数値以外）
         elif not input_line.isdigit():
             while not input_line.isdigit():
                 print(pycolor.YELLOW + "数を入力してください" + pycolor.END)
                 input_line = input(">")            
 
+        #入力リスト生成
         num_list=[]
         for num in input_line:
             num_list.append(int(num))
 
         return num_list    
-                
-                
 
 if __name__ == "__main__":
-    game = Numeron_game(2)
-    game_io = Numeron_io
-
-    numlist = game_io.num_input(game_io, 3)
-
-    print(numlist)
-
-    for num in numlist:
-        print(type(num))
-
+    print("Hello, Numer0n!")
