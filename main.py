@@ -1,13 +1,13 @@
 import numeron as nr
 
 def main():
-    #Numeron_ioクラスの継承
+    #Numeron_ioインスタンスの生成
     game_io = nr.Numeron_io()
 
     #難易度選択
     difficulty = game_io.set_difficulty()
 
-    #Numeron_gameクラスの継承、難易度初期化
+    #Numeron_gameインスタンスの生成、難易度初期化
     game = nr.Numeron_game(difficulty)
 
     if difficulty == 0:
