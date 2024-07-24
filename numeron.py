@@ -35,25 +35,9 @@ class Numeron:
 
     def generate_ans(self) -> list:
         
-        ans_list = []
+        ans_list = random.sample(range(0,10), self.digits)               
 
-        #生成する
-        for i in range(self.digits):
-
-            rand_num = random.randint(0,9)
-
-            #重複を解消する
-            #重複解消は関数分けたほうがいいかも
-            for j in ans_list:
-                while j == rand_num:
-                    print(pycolor.YELLOW + f"duplicated! >>> j:{j}, rand:{rand_num}" + pycolor.END)
-                    rand_num = random.randint(0, 9)
-                    print(pycolor.GREEN + f"regenerated >>> rand:{rand_num}" + pycolor.END)
-
-            ans_list.append(rand_num)
-            print(f"append:{rand_num}")            
-
-        return ans_list
+        return ans_list           
 
     def jointed_ans(self, ans_list:list) -> int:
         ans = "".join(map(str, ans_list))
@@ -88,19 +72,4 @@ class Numeron:
 
 if __name__ == "__main__":
     game = Numeron(2)
-    count = 0
 
-    for i in range(100):
-        ans = game.generate_ans()
-        print(f"{ans}")
-
-        for j in range(len(ans)):
-            for k in range(len(ans)):
-                if ans[j] == ans[k] and j != k:
-                    count += 1
-                    print(pycolor.RED + "ERROR : 重複しています" + pycolor.END)
-
-        print("")
-        time.sleep(0.01)
-
-    print(f"Test Complete. False:{count}")                
